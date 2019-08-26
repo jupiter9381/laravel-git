@@ -60,7 +60,7 @@
 
     <div class="social-auth-links text-center">
       <p>- OR -</p>
-      <a href="{{ url('auth/github') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+      <a href="{{ url('auth/github') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-github-alt"></i> Sign up using
         Github</a>
       <a href="{{ url('auth/google') }}" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
         Google+</a>

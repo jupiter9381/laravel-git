@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use Socialite;
 use Auth;
 use App\User;
@@ -40,6 +43,23 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function login(Request $request){
+      $email = $request->input("email");
+      $password = $request->input('password');
+      //$authUser = $this->findUser($email, $password);
+      $user = User::where('email', $email)->whereNotNull('password')->first();
+
+      if (Hash::check($password, $user->password)) {
+        Auth::login($user, true);
+        return redirect($this->redirectTo);
+      } else {
+        return redirect('/login');
+      }
+    }
+
+    public function findUser($email, $password) {
+
+    }
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();
