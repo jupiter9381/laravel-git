@@ -14,3 +14,5 @@
 
 <!-- AdminLTE App -->
 <script src="{{url('/')}}/js/adminlte.js"></script>
+
+<script src="{{url('/')}}/js/custom.js"></script>

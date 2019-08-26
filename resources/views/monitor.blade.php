@@ -37,8 +37,8 @@
                 <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="ftp_key"> FTP_key</label>
                 <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="login"> Login</label>
                 <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="github_token"> Github_token</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red"> Other</label>
-                <input type="text" name="other" class="form-control">
+                <label class="monitor_field"><input type="checkbox" class="flat-red other-checkbox"> Other</label>
+                <input type="text" name="other" class="form-control other" style="display: none;">
               </div>
             </div>
           </div>
