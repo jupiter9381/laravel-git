@@ -1,0 +1,6 @@
+.monitor_field {
+  display: block;
+}
+.monitor_field input {
+  margin-right: 15px;
+}

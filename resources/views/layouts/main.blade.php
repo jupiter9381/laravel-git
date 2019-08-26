@@ -14,12 +14,18 @@
     <link rel="stylesheet" href="{{ url('/')}}/libs/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ url('/')}}/libs/Ionicons/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="{{ url('/')}}/plugins/iCheck/all.css">
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('/')}}/css/AdminLTE.min.css">
 
     <link rel="stylesheet" href="{{ url('/')}}/css/skins/_all-skins.min.css">
+
+    <link rel="stylesheet" href="{{ url('/')}}/css/custom.css"
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 </head>
@@ -30,5 +36,15 @@
     @yield('content')
     @include('templates.footer')
   </div>
+
+    @include('templates.common_js')
+
+    <script>
+    //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+          checkboxClass: 'icheckbox_flat-green',
+          radioClass   : 'iradio_flat-green'
+        })
+    </script>
 </body>
 </html>

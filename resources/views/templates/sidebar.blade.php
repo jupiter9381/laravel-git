@@ -26,8 +26,8 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li><a href="{{url('/')}}/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li><a href="{{url('/')}}/monitors"><i class="fa fa-github"></i> <span>Monitors</span></a></li>
-      <li><a href="{{url('/')}}/Create"><i class="fa fa-github-alt"></i> <span>Create</span></a></li>
+      <li><a href="{{url('/')}}/monitors/create"><i class="fa fa-github"></i> <span>Monitors</span></a></li>
+      <li><a href="{{url('/')}}/monitors/create"><i class="fa fa-github-alt"></i> <span>Create</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->
