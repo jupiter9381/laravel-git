@@ -18,26 +18,33 @@
         <div class="box-header with-border">
           <h3 class="box-title">Create new monitors</h3>
         </div>
-        <form role="form">
+        <form role="form" method="post" action="{{url('/')}}/monitors/add_monitor">
+          @csrf
           <div class="box-body">
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Name</label>
-                <textarea class="form-control" rows="6" placeholder="exmaple.com"></textarea>
+                <textarea class="form-control" rows="6" placeholder="exmaple.com" name="name"></textarea>
               </div>
             </div>
             <div class="col-sm-6">
               <label>Search Strings</label>
               <div class="form-group">
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> Password</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> API_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> Secret_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> Aws_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> FTP_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> Login</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked> Github_token</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="password"> Password</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="api_key"> API_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="secret_key"> Secret_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="aws_key"> Aws_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="ftp_key"> FTP_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="login"> Login</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="github_token"> Github_token</label>
                 <label class="monitor_field"><input type="checkbox" class="flat-red"> Other</label>
+                <input type="text" name="other" class="form-control">
               </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </div>
         </form>

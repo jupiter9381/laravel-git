@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Monitor;
 
 class MonitorController extends Controller
 {
@@ -15,5 +17,33 @@ class MonitorController extends Controller
 
     public function view(){
       return view('monitor');
+    }
+
+    public function add_monitor(Request $request) {
+      $user_id = Auth::user()->id;
+      $name = $request->input('name');
+      $password = $request->input('password') === NULL ? '0' : '1';
+      $api_key = $request->input('api_key') === NULL ? '0' : '1';
+      $secret_key = $request->input('secret_key') === NULL ? '0' : '1';
+      $aws_key = $request->input("aws_key") === NULL ? '0' : '1';
+      $ftp_key = $request->input("ftp_key") === NULL ? '0' : '1';
+      $login = $request->input("login") === NULL ? '0' : '1';
+      $github_token = $request->input("github_token") === NULL ? '0' : '1';
+      $other = $request->input("other") === NULL ? '0' : '1';
+
+      $monitor = new Monitor();
+      $monitor->user_id = $user_id;
+      $monitor->name = $name;
+      $monitor->password = $password;
+      $monitor->api_key = $api_key;
+      $monitor->secret_key = $secret_key;
+      $monitor->aws_key = $aws_key;
+      $monitor->ftp_key = $ftp_key;
+      $monitor->login = $login;
+      $monitor->github_token = $github_token;
+      $monitor->other = $other;
+      $monitor->save();
+
+      return redirect('/monitors/create');
     }
 }

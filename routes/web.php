@@ -23,6 +23,7 @@ Route::post('login', 'Auth\LoginController@login');
 
 Route::get('/monitors/create', 'MonitorController@view');
 
+Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
