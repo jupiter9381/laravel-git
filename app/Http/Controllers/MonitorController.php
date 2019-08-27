@@ -29,7 +29,7 @@ class MonitorController extends Controller
       $ftp_key = $request->input("ftp_key") === NULL ? '0' : '1';
       $login = $request->input("login") === NULL ? '0' : '1';
       $github_token = $request->input("github_token") === NULL ? '0' : '1';
-      $other = $request->input("other") === NULL ? '0' : '1';
+      $other = $request->input("other");
 
       $monitor = new Monitor();
       $monitor->user_id = $user_id;
