@@ -28,6 +28,7 @@ class MonitorController extends Controller
     public function search($id) {
 
       $token = Auth::user()->github_token;
+
       $headers = [
         'Authorization' => 'token '.$token,
         'Accept' => 'application/json',
@@ -91,5 +92,25 @@ class MonitorController extends Controller
       $monitor->save();
 
       return redirect('/monitors/create');
+    }
+
+    public function search_code(Request $request) {
+      $url = $request->input('url');
+      $url = str_replace("https://github.com", "https://raw.githubusercontent.com", $url);
+      $url = str_replace("blob/", "", $url);
+      $headers = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+      ];
+
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+      $res = $client->get($url);
+      $res = $res->getBody()->getContents();
+
+      return response()->json([
+        'result' => htmlentities($res)
+      ]);
     }
 }

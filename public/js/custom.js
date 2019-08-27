@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  console.log("sdfsdf");
   $(".other-checkbox").on('ifChecked', function(){
     $(".other").css('display', 'block');
     $(".other").attr('disabled', false);
@@ -8,4 +7,18 @@ $(document).ready(function(){
     $(".other").css('display', 'none');
     $('.other').attr('disabled', true);
   });
+
+  $(".link").click(function(e){
+    var url = $(this).attr('url');
+    console.log(url);
+    $.ajax({
+			url : '/monitors/search_code',
+      type : 'post',
+      dataType : 'json',
+      data: {url: url, "_token": $('meta[name="csrf-token"]').attr('content')},
+      success: function(data){
+      	$(".code_field").html(data.result);
+      }
+		})
+  })
 });

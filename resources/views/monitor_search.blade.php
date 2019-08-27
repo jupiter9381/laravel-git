@@ -25,7 +25,7 @@
                 <td>{{$key + 1}}</td>
                 <td>{{$value['filename']}}</td>
                 <td>{{$value['repository']}}</td>
-                <td><a href="{{$value['html_url']}}">Link</a></td>
+                <td><a href="#snippetModal" data-toggle="modal" url="{{$value['html_url']}}" class="link">Link</a></td>
                 <td></td>
               </tr>
               @endforeach
@@ -33,6 +33,26 @@
           </table>
         </div>
       </div>
+    </div>
+    <div class="modal fade" id="snippetModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Code Snippet</h4>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control code_field" rows="30"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
     </div>
   </section>
 </div>
