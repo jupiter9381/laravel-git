@@ -18,11 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'HomeController@profile');
+Route::post('/profile/update', 'HomeController@updateProfile');
+
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 
 Route::get('/monitors/create', 'MonitorController@view');
 Route::get('/monitors', 'MonitorController@index');
+Route::get('/monitors/search/{id}', 'MonitorController@search');
 
 Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 

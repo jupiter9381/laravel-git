@@ -36,7 +36,7 @@
                   <td><i class="fa <?php echo $value->login == "1" ? "fa-check" : "fa-times" ;?>"></i></td>
                   <td><i class="fa <?php echo $value->github == "1" ? "fa-check" : "fa-times" ;?>"></i></td>
                   <td>{{$value->other}}</td>
-                  <td><a href="{{url('/')}}/monitor/search/{{$value->id}}"><i class="fa fa-eye"></i></a></td>
+                  <td><a href="{{url('/')}}/monitors/search/{{$value->id}}"><i class="fa fa-eye"></i></a></td>
                 </tr>
               @endforeach
             </tbody>

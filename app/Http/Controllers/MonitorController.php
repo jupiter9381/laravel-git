@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Monitor;
+use Ixudra\Curl\Facades\Curl;
 
 class MonitorController extends Controller
 {
@@ -22,6 +23,17 @@ class MonitorController extends Controller
     public function index() {
       $monitors = Monitor::where('user_id', Auth::user()->id)->get();
       return view('monitor_list', compact('monitors'));
+    }
+
+    public function search($id) {
+      
+      $client = new \GuzzleHttp\Client();
+      $res = $client->get('https://api.github.com/search/code?q=Eloquent+in:file+language:php+user:jupiter9381');
+      echo $res->getStatusCode(); // 200
+      echo $res->getBody();
+      var_dump("sdfsdf");
+      exit();
+      return view('monitor_search');
     }
     public function add_monitor(Request $request) {
       $user_id = Auth::user()->id;
