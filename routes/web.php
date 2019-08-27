@@ -22,6 +22,7 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 
 Route::get('/monitors/create', 'MonitorController@view');
+Route::get('/monitors', 'MonitorController@index');
 
 Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 

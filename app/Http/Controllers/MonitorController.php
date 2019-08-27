@@ -19,6 +19,10 @@ class MonitorController extends Controller
       return view('monitor');
     }
 
+    public function index() {
+      $monitors = Monitor::where('user_id', Auth::user()->id)->get();
+      return view('monitor_list', compact('monitors'));
+    }
     public function add_monitor(Request $request) {
       $user_id = Auth::user()->id;
       $name = $request->input('name');
