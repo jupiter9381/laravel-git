@@ -23,6 +23,7 @@ Route::post('/profile/update', 'HomeController@updateProfile');
 
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'HomeController@logut');
 
 Route::get('/monitors/create', 'MonitorController@view');
 Route::get('/monitors', 'MonitorController@index');

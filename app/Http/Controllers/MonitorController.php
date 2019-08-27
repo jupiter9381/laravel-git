@@ -26,14 +26,44 @@ class MonitorController extends Controller
     }
 
     public function search($id) {
-      
-      $client = new \GuzzleHttp\Client();
-      $res = $client->get('https://api.github.com/search/code?q=Eloquent+in:file+language:php+user:jupiter9381');
-      echo $res->getStatusCode(); // 200
-      echo $res->getBody();
-      var_dump("sdfsdf");
-      exit();
-      return view('monitor_search');
+
+      $token = Auth::user()->github_token;
+      $headers = [
+        'Authorization' => 'token '.$token,
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+      ];
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+
+      $res = $client->get('https://api.github.com/user');
+      $res = json_decode($res->getBody());
+      $github_login = $res->login;
+
+      $headers = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+      ];
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+      $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+
+      $res = json_decode($res->getBody());
+      $items = $res->items;
+
+      $searches = array();
+      foreach ($items as $key => $item) {
+        $data = array(
+          "filename" => $item->name,
+          "html_url" => $item->html_url,
+          "repository" => $item->repository->name,
+        );
+        array_push($searches, $data);
+      }
+
+      return view('monitor_search', compact('searches'));
     }
     public function add_monitor(Request $request) {
       $user_id = Auth::user()->id;

@@ -41,4 +41,9 @@ class HomeController extends Controller
       $user->save();
       return redirect('/profile');
     }
+
+    public function logut(){
+      Auth::logout();
+      return redirect('/');
+    }
 }
