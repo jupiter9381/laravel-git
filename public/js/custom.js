@@ -10,7 +10,7 @@ $(document).ready(function(){
 
   $(".link").click(function(e){
     var url = $(this).attr('url');
-    console.log(url);
+    $(".code_field").html("");
     $.ajax({
 			url : '/monitors/search_code',
       type : 'post',
