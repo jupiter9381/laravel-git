@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 
+use Ixudra\Curl\Facades\Curl;
+use App\Monitor;
+
 class HomeController extends Controller
 {
     /**
@@ -25,7 +28,43 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+      $user_id = Auth::user()->id;
+      $user = User::where('id', $user_id)->get();
+      $github_token = $user[0]->github_token;
+
+      $headers = [
+        'Authorization' => 'token '.$github_token,
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+      ];
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+
+      $res = $client->get('https://api.github.com/user');
+      $res = json_decode($res->getBody());
+      $github_login = $res->login;
+
+      $headers = [
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+      ];
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+      
+      $monitors = Monitor::where('user_id', $user_id)->get();
+
+      foreach ($monitors as $key => $value) {
+        $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+
+        $res = json_decode($res->getBody());
+        $file_number = $res->total_count;
+        $value->filenumber = $file_number;
+      }
+
+      return view('home', compact('monitors'));
     }
 
     public function profile() {

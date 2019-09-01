@@ -49,6 +49,8 @@ class MonitorController extends Controller
       $client = new \GuzzleHttp\Client([
         'headers' => $headers
       ]);
+      $monitor = Monitor::where('id', $id)->first();
+
       $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
 
       $res = json_decode($res->getBody());
@@ -64,7 +66,7 @@ class MonitorController extends Controller
         array_push($searches, $data);
       }
 
-      return view('monitor_search', compact('searches'));
+      return view('monitor_search', compact('searches', 'monitor'));
     }
     public function add_monitor(Request $request) {
       $user_id = Auth::user()->id;

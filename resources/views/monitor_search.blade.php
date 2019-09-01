@@ -5,7 +5,7 @@
   <section class="content-header">
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Monitor Search</h3>
+        <h3 class="box-title">Monitor Search ( {{$monitor->name}} )</h3>
       </div>
       <div class="box-body">
         <div class="box-body table-responsive no-padding">

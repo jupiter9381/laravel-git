@@ -30,17 +30,19 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach($monitors as $key => $value)
                 <tr>
-                  <td>1</td>
-                  <td>jupiter</td>
-                  <td>5</td>
-                  <td>2019.05.05</td>
+                  <td>{{$key + 1}}</td>
+                  <td>{{$value->name}}</td>
+                  <td>{{$value->filenumber}}</td>
+                  <td>{{$value->updated_at}}</td>
                   <td>
-                    <a href="#" data-toggle="tooltip" title="View" style="padding: 0 5px;"><i class="fa fa-eye"></i></a>
+                    <a href="{{url('/')}}/monitors/search/{{$value->id}}" data-toggle="tooltip" title="View" style="padding: 0 5px;"><i class="fa fa-eye"></i></a>
                     <a href="#" data-toggle="tooltip" title="Edit" style="padding: 0 5px;"><i class="fa fa-edit"></i></a>
                     <a href="#" data-toggle="tooltip" title="Delete" style="padding: 0 5px;"><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
