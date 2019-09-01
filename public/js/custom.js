@@ -3,6 +3,8 @@ $(document).ready(function(){
     $(".other").css('display', 'block');
     $(".other").attr('disabled', false);
   });
+  $('[data-toggle="tooltip"]').tooltip();
+  
   $(".other-checkbox").on('ifUnchecked', function(){
     $(".other").css('display', 'none');
     $('.other').attr('disabled', true);
