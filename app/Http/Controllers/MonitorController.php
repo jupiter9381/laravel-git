@@ -7,6 +7,8 @@ use Auth;
 use App\Monitor;
 use Ixudra\Curl\Facades\Curl;
 use App\File;
+use App\Mail\NotificationEmail;
+use Illuminate\Support\Facades\Mail;
 
 class MonitorController extends Controller
 {
@@ -65,12 +67,12 @@ class MonitorController extends Controller
           "html_url" => $item->html_url,
           "repository" => $item->repository->name,
         );
-        $file = new File;
-        $file->user_id = $user_id;
-        $file->monitor_id = $user_id;
-        $file->url = $item->html_url;
-        $file->isChecked = 1;
-        $file->save();
+        // $file = new File;
+        // $file->user_id = $user_id;
+        // $file->monitor_id = $user_id;
+        // $file->url = $item->html_url;
+        // $file->isChecked = 1;
+        // $file->save();
         array_push($searches, $data);
       }
 
@@ -122,5 +124,54 @@ class MonitorController extends Controller
       return response()->json([
         'result' => htmlentities($res)
       ]);
+    }
+
+    public function checkMonitors(Request $request) {
+      $user_id = Auth::user()->id;
+      $files = File::where('user_id', $user_id)->where('isChecked', 0)->get();
+
+      if(count($files) > 0){
+        $data = ['email' => 'jupiter9381@gmail.com'];
+
+        Mail::to('jupiter9381@gmail.com')->send(new NotificationEmail($data));
+      }
+      return response()->json([
+        'result' => count($files)
+      ]);
+      // $monitors = Monitor::where('user_id', $user_id)->get();
+      //
+      // $token = Auth::user()->github_token;
+      //
+      // $headers = [
+      //   'Authorization' => 'token '.$token,
+      //   'Accept' => 'application/json',
+      //   'Content-Type' => 'application/json',
+      // ];
+      // $client = new \GuzzleHttp\Client([
+      //   'headers' => $headers
+      // ]);
+      //
+      // $res = $client->get('https://api.github.com/user');
+      // $res = json_decode($res->getBody());
+      // $github_login = $res->login;
+      //
+      // foreach ($monitors as $key => $value) {
+      //   if($key > 0) continue;
+      //   $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+      //
+      //   $res = json_decode($res->getBody());
+      //   $items = $res->items;
+      //
+      //   $searches = array();
+      //   foreach ($items as $key => $item) {
+      //     $file = File::where('')
+      //     $data = array(
+      //       "filename" => $item->name,
+      //       "html_url" => $item->html_url,
+      //       "repository" => $item->repository->name,
+      //     );
+      //     array_push($searches, $data);
+      //   }
+      // }
     }
 }

@@ -46,5 +46,17 @@
           radioClass   : 'iradio_flat-green'
         })
     </script>
+
+    <script>
+      $(document).ready(function(){
+        setInterval(function(){
+
+        }, 3000);
+         $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
+         .done(function(response){
+           console.log(response)
+         });
+      });
+    </script>
 </body>
 </html>

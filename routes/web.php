@@ -39,5 +39,7 @@ Route::get('/monitors/search/{id}', 'MonitorController@search');
 Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 Route::post('/monitors/search_code', 'MonitorController@search_code');
 
+Route::post('/monitors/check', 'MonitorController@checkMonitors');
+
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
