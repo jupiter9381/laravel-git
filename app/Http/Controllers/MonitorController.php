@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Monitor;
 use Ixudra\Curl\Facades\Curl;
+use App\File;
 
 class MonitorController extends Controller
 {
@@ -27,6 +28,7 @@ class MonitorController extends Controller
 
     public function search($id) {
 
+      $user_id = Auth::user()->id;
       $token = Auth::user()->github_token;
 
       $headers = [
@@ -63,6 +65,12 @@ class MonitorController extends Controller
           "html_url" => $item->html_url,
           "repository" => $item->repository->name,
         );
+        $file = new File;
+        $file->user_id = $user_id;
+        $file->monitor_id = $user_id;
+        $file->url = $item->html_url;
+        $file->isChecked = 1;
+        $file->save();
         array_push($searches, $data);
       }
 

@@ -13,8 +13,15 @@
 
 Route::get('/', function () {
     return view('welcome');
+    //return view('fileupload');
 });
 
+Route::post('upload', function(){
+  request()->file('file')->store(
+    '',
+    's3'
+  );
+})->name('upload');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
