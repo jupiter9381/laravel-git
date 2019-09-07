@@ -9,6 +9,7 @@ use Ixudra\Curl\Facades\Curl;
 use App\File;
 use App\Mail\NotificationEmail;
 use Illuminate\Support\Facades\Mail;
+use DB;
 
 class MonitorController extends Controller
 {
@@ -128,15 +129,36 @@ class MonitorController extends Controller
 
     public function checkMonitors(Request $request) {
       $user_id = Auth::user()->id;
-      $files = File::where('user_id', $user_id)->where('isChecked', 0)->get();
+      $files = DB::table('files')->select("files.*", "monitors.name as monitor_name", "monitors.password", "api_key", "secret_key", "aws_key",
+                          "ftp_key", "login", "monitors.github_token", "other", "users.email")
+                      ->join('monitors', 'monitors.id', '=', 'files.monitor_id')
+                      ->join('users', 'users.id', '=', 'files.user_id')
+                      ->where('files.user_id', $user_id)
+                      ->where('isChecked', 0)
+                      ->get();
 
       if(count($files) > 0){
-        $data = ['email' => 'jupiter9381@gmail.com'];
+        foreach ($files as $key => $value) {
+          $search_string = "";
+          if($value->password == 1) $search_string .= "Password, ";
+          if($value->api_key == 1) $search_string .= "API, ";
+          if($value->secret_key == 1) $search_string .= "Secret, ";
+          if($value->aws_key == 1) $search_string .= "AWS, ";
+          if($value->ftp_key == 1) $search_string .= "FTP, ";
+          if($value->login == 1) $search_string .= "Login, ";
+          if($value->github_token == 1) $search_string .= "Github, ";
+          if($value->other == 1) $search_string .= "Other, ";
 
-        Mail::to('jupiter9381@gmail.com')->send(new NotificationEmail($data));
+          // $data = ['email' => $value->email, 'monitor_name' => $value->monitor_name, 'search_string' => $search_string, 'monitor_id' => $value->monitor_id];
+          // Mail::to($value->email)->send(new NotificationEmail($data));
+        }
+        //$files
+        // $data = ['email' => 'jupiter9381@gmail.com'];
+        //
+        //
       }
       return response()->json([
-        'result' => count($files)
+        'result' => $data
       ]);
       // $monitors = Monitor::where('user_id', $user_id)->get();
       //
