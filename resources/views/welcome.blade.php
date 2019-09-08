@@ -57,9 +57,22 @@
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="#contact_page">Contacts</a></li>
                 </ul>
-                <div class="right-button hidden-xs">
-                    <a href="#">Sign Up</a>
-                </div>
+                @if (Route::has('login'))
+                    <div class="top-right links">
+                        @auth
+                          <div class="right-button hidden-xs">
+                            <a href="{{ url('/home') }}">Home</a>
+                          </div>
+                        @else
+                          <div class="right-button hidden-xs">
+                              <a href="{{ route('login') }}">Login</a>
+                            @if (Route::has('register'))
+                              <a href="{{ route('register') }}">Register</a>
+                            @endif
+                          </div>
+                        @endauth
+                    </div>
+                @endif
             </div>
         </div>
     </nav>

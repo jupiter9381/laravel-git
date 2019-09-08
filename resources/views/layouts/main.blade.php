@@ -52,10 +52,10 @@
         setInterval(function(){
 
         }, 3000);
-         $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
-         .done(function(response){
-           console.log(response)
-         });
+         // $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
+         // .done(function(response){
+         //   console.log(response)
+         // });
       });
     </script>
 </body>
