@@ -137,7 +137,29 @@ class MonitorController extends Controller
         'result' => htmlentities($res)
       ]);
     }
+    public function checkNotification(Request $request){
+      $user_id = Auth::user()->id;
+      $files = DB::table('files')->select(DB::raw('count(*) as count, monitors.name as monitor_name, monitors.id as monitor_id'))
+                      ->join('monitors', 'monitors.id', '=', 'files.monitor_id')
+                      ->where('files.user_id', $user_id)
+                      ->where('isChecked', 0)
+                      ->groupBy('files.monitor_id')
+                      ->get();
+      if(count($files) > 0){
+        return response()->json([
+          'result' => $files
+        ]);
+      }
 
+    }
+    public function checkedNotification(Request $request){
+      $user_id = Auth::user()->id;
+      $monitor_id = $request->input('monitor_id');
+      DB::table('files')->where('user_id', $user_id)->where('monitor_id', $monitor_id)->update(['isChecked' => 1]);
+      return response()->json([
+        'result' => 'Updated successfully.'
+      ]);
+    }
     public function checkMonitors(Request $request) {
       $user_id = Auth::user()->id;
       $files = DB::table('files')->select("files.*", "monitors.name as monitor_name", "monitors.password", "api_key", "secret_key", "aws_key",

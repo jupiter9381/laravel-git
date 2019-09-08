@@ -44,6 +44,8 @@ Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 Route::post('/monitors/search_code', 'MonitorController@search_code');
 
 Route::post('/monitors/check', 'MonitorController@checkMonitors');
+Route::post('/monitors/notification', 'MonitorController@checkNotification');
+Route::post('/monitors/checkedNotification', 'MonitorController@checkedNotification');
 
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
