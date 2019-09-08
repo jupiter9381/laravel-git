@@ -26,11 +26,6 @@
             <li>
               <!-- inner menu: contains the actual data -->
               <ul class="menu">
-                <li>
-                  <a href="#">
-                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                  </a>
-                </li>
               </ul>
             </li>
             <!-- <li class="footer"><a href="#">View all</a></li> -->

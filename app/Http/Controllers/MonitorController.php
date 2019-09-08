@@ -68,12 +68,6 @@ class MonitorController extends Controller
           "html_url" => $item->html_url,
           "repository" => $item->repository->name,
         );
-        // $file = new File;
-        // $file->user_id = $user_id;
-        // $file->monitor_id = $user_id;
-        // $file->url = $item->html_url;
-        // $file->isChecked = 1;
-        // $file->save();
         array_push($searches, $data);
       }
 
@@ -160,14 +154,15 @@ class MonitorController extends Controller
         'result' => 'Updated successfully.'
       ]);
     }
-    public function checkMonitors(Request $request) {
+
+    public function emailCheck(Request $request) {
       $user_id = Auth::user()->id;
       $files = DB::table('files')->select("files.*", "monitors.name as monitor_name", "monitors.password", "api_key", "secret_key", "aws_key",
                           "ftp_key", "login", "monitors.github_token", "other", "users.email")
                       ->join('monitors', 'monitors.id', '=', 'files.monitor_id')
                       ->join('users', 'users.id', '=', 'files.user_id')
                       ->where('files.user_id', $user_id)
-                      ->where('isChecked', 0)
+                      ->where('emailSent', 0)
                       ->get();
 
       if(count($files) > 0){
@@ -182,51 +177,59 @@ class MonitorController extends Controller
           if($value->github_token == 1) $search_string .= "Github, ";
           if($value->other == 1) $search_string .= "Other, ";
 
-          // $data = ['email' => $value->email, 'monitor_name' => $value->monitor_name, 'search_string' => $search_string, 'monitor_id' => $value->monitor_id];
-          // Mail::to($value->email)->send(new NotificationEmail($data));
+          $data = ['email' => $value->email, 'monitor_name' => $value->monitor_name, 'search_string' => $search_string, 'monitor_id' => $value->monitor_id];
+          Mail::to($value->email)->send(new NotificationEmail($data));
+
+          DB::table('files')->where('id', $value->id)->update(['emailSent' => 1]);
         }
-        //$files
-        // $data = ['email' => 'jupiter9381@gmail.com'];
-        //
-        //
+
+        $data = ['email' => 'jupiter9381@gmail.com'];
       }
       return response()->json([
-        'result' => $data
+        'result' => "Email sent successfully."
       ]);
-      // $monitors = Monitor::where('user_id', $user_id)->get();
-      //
-      // $token = Auth::user()->github_token;
-      //
-      // $headers = [
-      //   'Authorization' => 'token '.$token,
-      //   'Accept' => 'application/json',
-      //   'Content-Type' => 'application/json',
-      // ];
-      // $client = new \GuzzleHttp\Client([
-      //   'headers' => $headers
-      // ]);
-      //
-      // $res = $client->get('https://api.github.com/user');
-      // $res = json_decode($res->getBody());
-      // $github_login = $res->login;
-      //
-      // foreach ($monitors as $key => $value) {
-      //   if($key > 0) continue;
-      //   $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
-      //
-      //   $res = json_decode($res->getBody());
-      //   $items = $res->items;
-      //
-      //   $searches = array();
-      //   foreach ($items as $key => $item) {
-      //     $file = File::where('')
-      //     $data = array(
-      //       "filename" => $item->name,
-      //       "html_url" => $item->html_url,
-      //       "repository" => $item->repository->name,
-      //     );
-      //     array_push($searches, $data);
-      //   }
-      // }
+    }
+    public function checkMonitors(Request $request) {
+      $user_id = Auth::user()->id;
+      $monitors = Monitor::where('user_id', $user_id)->get();
+
+      $token = Auth::user()->github_token;
+
+      $headers = [
+        'Authorization' => 'token '.$token,
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json',
+      ];
+      $client = new \GuzzleHttp\Client([
+        'headers' => $headers
+      ]);
+
+      $res = $client->get('https://api.github.com/user');
+      $res = json_decode($res->getBody());
+      $github_login = $res->login;
+
+      foreach ($monitors as $key => $value) {
+        $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+
+        $res = json_decode($res->getBody());
+        $items = $res->items;
+
+        $searches = array();
+        foreach ($items as $key => $item) {
+          $html_url = $item->html_url;
+          $monitor_id = $value->id;
+
+          $file = DB::table('files')->where('user_id', $user_id)->where('monitor_id', $monitor_id)->where('url', $html_url)->get();
+          if(count($file) == 0){
+            $file = new File;
+            $file->user_id = $user_id;
+            $file->monitor_id = $monitor_id;
+            $file->url = $html_url;
+            $file->isChecked = 0;
+            $file->emailSent = 0;
+            $file->save();
+          }
+        }
+      }
     }
 }

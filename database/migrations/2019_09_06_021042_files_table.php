@@ -19,7 +19,8 @@ class FilesTable extends Migration
             $table->string('user_id');
             $table->string('monitor_id');
             $table->string('url')->nullable();
-            $table->string('isChecked')->nullable();
+            $table->string('isChecked')->default(0);
+            $table->string('emailSent')->default(0)
             $table->timestamps();
         });
     }

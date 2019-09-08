@@ -49,35 +49,42 @@
 
     <script>
       $(document).ready(function(){
+
         setInterval(function(){
-          // $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
-          // .done(function(response){
-          //   console.log(response)
-          // });
-        }, 3000);
-         $.post('/monitors/notification', {_token: "{{ csrf_token() }}"}, null, 'json')
+          $.post('/monitors/notification', {_token: "{{ csrf_token() }}"}, null, 'json')
+          .done(function(response){
+            var notifications = response.result;
+            $(".notification-count").html(notifications.length);
+            $(".dropdown-toggle span.label-warning").html(notifications.length);
+            $("ul.menu").html("");
+            var html = "";
+            for(var i = 0; i < notifications.length; i++){
+              html += "<li monitor_id='"+notifications[i]['monitor_id']+"' class='notification-item'>";
+              html +=    "<a href='/monitors/search/"+notifications[i]['monitor_id']+"'>";
+              html +=        "<i class='fa fa-users text-aqua'></i>"+ "Monitor <strong>"
+                             + notifications[i]['monitor_name'] + "</strong> has " + notifications[i]['count'] +" files.";
+              html +=    "</a>";
+              html += "</li>";
+            }
+            $("ul.menu").html(html);
+          });
+        }, 10000)
+
+       $('ul.menu').on( 'click', '.notification-item', function () {
+         $.post('/monitors/checkedNotification', {_token: "{{ csrf_token() }}", monitor_id: $(this).attr('monitor_id')}, null, 'json')
          .done(function(response){
-           var notifications = response.result;
-           $(".notification-count").html(notifications.length);
-           $(".dropdown-toggle span.label-warning").html(notifications.length);
-           $("ul.menu").html("");
-           var html = "";
-           for(var i = 0; i < notifications.length; i++){
-             html += "<li monitor_id='"+notifications[i]['monitor_id']+"' class='notification-item'>";
-             html +=    "<a href='/monitors/search/"+notifications[i]['monitor_id']+"'>";
-             html +=        "<i class='fa fa-users text-aqua'></i>"+ "Monitor <strong>"
-                            + notifications[i]['monitor_name'] + "</strong> has " + notifications[i]['count'] +" files.";
-             html +=    "</a>";
-             html += "</li>";
-           }
-           $("ul.menu").html(html);
          });
-         $('ul.menu').on( 'click', '.notification-item', function () {
-           $.post('/monitors/checkedNotification', {_token: "{{ csrf_token() }}", monitor_id: $(this).attr('monitor_id')}, null, 'json')
-           .done(function(response){
-             console.log(response);
-           });
+       });
+       setInterval(function(){
+         $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
+          .done(function(response){
          });
+       }, 15000)
+       setInterval(function(){
+         $.post('/monitors/emailCheck', {_token: "{{ csrf_token() }}"}, null, 'json')
+         .done(function(response){
+         });
+       }, 5000)
       });
     </script>
 </body>
