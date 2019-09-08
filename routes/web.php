@@ -48,5 +48,7 @@ Route::post('/monitors/notification', 'MonitorController@checkNotification');
 Route::post('/monitors/checkedNotification', 'MonitorController@checkedNotification');
 Route::post('/monitors/emailCheck', 'MonitorController@emailCheck');
 
+Route::get('stripe', 'StripeController@stripe');
+
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');

@@ -16,3 +16,11 @@
 <script src="{{url('/')}}/js/adminlte.js"></script>
 
 <script src="{{url('/')}}/js/custom.js"></script>
+
+<script>
+$(document).ready(function(e){
+  $("#monitor-form button").click(function(e){
+    console.log("sdfsdf");
+  })
+});
+</script>
