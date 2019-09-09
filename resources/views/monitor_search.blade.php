@@ -26,7 +26,12 @@
                 <td>{{$value->filename}}</td>
                 <td>{{$value->repository}}</td>
                 <td><a href="#snippetModal" data-toggle="modal" url="{{$value->url}}" class="link">Link</a></td>
-                <td><a href="{{url('/')}}/monitors/download/{{$value->id}}">Download</a></td>
+                <td>
+                  <?php if($value->isDownloaded != '1'){?>
+                  <a href="{{url('/')}}/monitors/download/{{$value->id}}">Download</a>
+                  <?php } else {?>
+                  <?php }?>
+                </td>
               </tr>
               @endforeach
             </tbody>

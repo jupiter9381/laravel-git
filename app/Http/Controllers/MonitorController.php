@@ -245,14 +245,20 @@ class MonitorController extends Controller
     public function download($id) {
       $file = File::find($id);
       $url = $file->url;
+      $filename = $file->filename;
+
+      $file_array = explode('.', $filename);
+      $extension = $file_array[count($file_array)-1];
+      $filename = explode('.', $filename)[0];
+      $filename .= date('y-m-d h:i:s');
       $url = str_replace("https://github.com", "https://raw.githubusercontent.com", $url);
       $url = str_replace("blob/", "", $url);
       $file_get_content = file_get_contents($url);
-      Storage::disk('s3')->put('file.txt', $file_get_content);
+
+      Storage::disk('s3')->put($filename, $file_get_content);
 
       $file->isDownloaded = 1;
       $file->save();
       return back();
-      //return back();
     }
 }
