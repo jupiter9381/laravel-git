@@ -16,17 +16,17 @@
                 <th>File</th>
                 <th>Repository</th>
                 <th>Url</th>
-                <th></th>
+                <th>Download</th>
               </tr>
             </thead>
             <tbody>
               @foreach($searches as $key => $value)
               <tr>
                 <td>{{$key + 1}}</td>
-                <td>{{$value['filename']}}</td>
-                <td>{{$value['repository']}}</td>
-                <td><a href="#snippetModal" data-toggle="modal" url="{{$value['html_url']}}" class="link">Link</a></td>
-                <td></td>
+                <td>{{$value->filename}}</td>
+                <td>{{$value->repository}}</td>
+                <td><a href="#snippetModal" data-toggle="modal" url="{{$value->url}}" class="link">Link</a></td>
+                <td><a href="{{url('/')}}/monitors/download/{{$value->id}}">Download</a></td>
               </tr>
               @endforeach
             </tbody>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 use App\Monitor;
 use Ixudra\Curl\Facades\Curl;
@@ -32,44 +33,47 @@ class MonitorController extends Controller
     public function search($id) {
 
       $user_id = Auth::user()->id;
-      $token = Auth::user()->github_token;
+      $monitor = Monitor::find($id);
+      $searches = DB::table('files')->where('user_id', $user_id)->where('monitor_id', $id)->get();
 
-      $headers = [
-        'Authorization' => 'token '.$token,
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-      ];
-      $client = new \GuzzleHttp\Client([
-        'headers' => $headers
-      ]);
-
-      $res = $client->get('https://api.github.com/user');
-      $res = json_decode($res->getBody());
-      $github_login = $res->login;
-
-      $headers = [
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json'
-      ];
-      $client = new \GuzzleHttp\Client([
-        'headers' => $headers
-      ]);
-      $monitor = Monitor::where('id', $id)->first();
-
-      $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
-
-      $res = json_decode($res->getBody());
-      $items = $res->items;
-
-      $searches = array();
-      foreach ($items as $key => $item) {
-        $data = array(
-          "filename" => $item->name,
-          "html_url" => $item->html_url,
-          "repository" => $item->repository->name,
-        );
-        array_push($searches, $data);
-      }
+      // $token = Auth::user()->github_token;
+      //
+      // $headers = [
+      //   'Authorization' => 'token '.$token,
+      //   'Accept' => 'application/json',
+      //   'Content-Type' => 'application/json',
+      // ];
+      // $client = new \GuzzleHttp\Client([
+      //   'headers' => $headers
+      // ]);
+      //
+      // $res = $client->get('https://api.github.com/user');
+      // $res = json_decode($res->getBody());
+      // $github_login = $res->login;
+      //
+      // $headers = [
+      //   'Accept' => 'application/json',
+      //   'Content-Type' => 'application/json'
+      // ];
+      // $client = new \GuzzleHttp\Client([
+      //   'headers' => $headers
+      // ]);
+      // $monitor = Monitor::where('id', $id)->first();
+      //
+      // $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+      //
+      // $res = json_decode($res->getBody());
+      // $items = $res->items;
+      //
+      // $searches = array();
+      // foreach ($items as $key => $item) {
+      //   $data = array(
+      //     "filename" => $item->name,
+      //     "html_url" => $item->html_url,
+      //     "repository" => $item->repository->name,
+      //   );
+      //   array_push($searches, $data);
+      // }
 
       return view('monitor_search', compact('searches', 'monitor'));
     }
@@ -216,7 +220,10 @@ class MonitorController extends Controller
 
         $searches = array();
         foreach ($items as $key => $item) {
+          $filename = $item->name;
           $html_url = $item->html_url;
+          $repository = $item->repository->name;
+
           $monitor_id = $value->id;
 
           $file = DB::table('files')->where('user_id', $user_id)->where('monitor_id', $monitor_id)->where('url', $html_url)->get();
@@ -225,11 +232,27 @@ class MonitorController extends Controller
             $file->user_id = $user_id;
             $file->monitor_id = $monitor_id;
             $file->url = $html_url;
+            $file->filename = $filename;
+            $file->repository = $repository;
             $file->isChecked = 0;
             $file->emailSent = 0;
             $file->save();
           }
         }
       }
+    }
+
+    public function download($id) {
+      $file = File::find($id);
+      $url = $file->url;
+      $url = str_replace("https://github.com", "https://raw.githubusercontent.com", $url);
+      $url = str_replace("blob/", "", $url);
+      $file_get_content = file_get_contents($url);
+      Storage::disk('s3')->put('file.txt', $file_get_content);
+
+      $file->isDownloaded = 1;
+      $file->save();
+      return back();
+      //return back();
     }
 }

@@ -49,7 +49,9 @@
 
     <script>
       $(document).ready(function(){
-
+        $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
+         .done(function(response){
+        });
         setInterval(function(){
           $.post('/monitors/notification', {_token: "{{ csrf_token() }}"}, null, 'json')
           .done(function(response){
@@ -68,7 +70,7 @@
             }
             $("ul.menu").html(html);
           });
-        }, 10000)
+        }, 1000 * 20)
 
        $('ul.menu').on( 'click', '.notification-item', function () {
          $.post('/monitors/checkedNotification', {_token: "{{ csrf_token() }}", monitor_id: $(this).attr('monitor_id')}, null, 'json')
@@ -79,12 +81,12 @@
          $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
           .done(function(response){
          });
-       }, 15000)
+       }, 60000 * 2)
        setInterval(function(){
          $.post('/monitors/emailCheck', {_token: "{{ csrf_token() }}"}, null, 'json')
          .done(function(response){
          });
-       }, 5000)
+       }, 60000 * 0.3)
       });
     </script>
 </body>

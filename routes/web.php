@@ -42,6 +42,7 @@ Route::get('/monitors/search/{id}', 'MonitorController@search');
 
 Route::post('/monitors/add_monitor', 'MonitorController@add_monitor');
 Route::post('/monitors/search_code', 'MonitorController@search_code');
+Route::get('/monitors/download/{id}', 'MonitorController@download');
 
 Route::post('/monitors/check', 'MonitorController@checkMonitors');
 Route::post('/monitors/notification', 'MonitorController@checkNotification');
