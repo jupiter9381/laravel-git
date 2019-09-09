@@ -213,7 +213,19 @@ class MonitorController extends Controller
       $github_login = $res->login;
 
       foreach ($monitors as $key => $value) {
-        $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
+        $search_keyword = "";
+        $search_keyword .= $value->name."+";
+        if($value->password == "1") $search_keyword .= "password+";
+        if($value->api_key == "1") $search_keyword .= "api_key+";
+        if($value->secret_key == "1") $search_keyword .= "secret_key+";
+        if($value->aws_key == "1") $search_keyword .= "aws_key+";
+        if($value->ftp_key == "1") $search_keyword .= "ftp_key+";
+        if($value->login == "1") $search_keyword .= "login+";
+        if($value->github_token == "1") $search_keyword .= "github_token+";
+
+        $search_keyword = substr($search_keyword, 0, -1);
+
+        $res = $client->get('https://api.github.com/search/code?q='.$search_keyword.'+in:file+user:'.$github_login);
 
         $res = json_decode($res->getBody());
         $items = $res->items;
