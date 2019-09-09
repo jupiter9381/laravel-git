@@ -30,13 +30,13 @@
             <div class="col-sm-6">
               <label>Search Strings</label>
               <div class="form-group">
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="password"> Password</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="api_key"> API_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="secret_key"> Secret_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="aws_key"> Aws_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="ftp_key"> FTP_key</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="login"> Login</label>
-                <label class="monitor_field"><input type="checkbox" class="flat-red" checked name="github_token"> Github_token</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="password"> Password</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="api_key"> API_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="secret_key"> Secret_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="aws_key"> Aws_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="ftp_key"> FTP_key</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="login"> Login</label>
+                <label class="monitor_field"><input type="checkbox" class="flat-red" name="github_token"> Github_token</label>
                 <label class="monitor_field"><input type="checkbox" class="flat-red other-checkbox"> Other</label>
                 <input type="text" name="other" class="form-control other" style="display: none;" disabled>
               </div>
@@ -87,6 +87,15 @@
                                                           id="payment-form">
                               @csrf
                               <input type="hidden" name="name">
+                              <input type="hidden" name="password" value="0">
+                              <input type="hidden" name="api_key" value="0">
+                              <input type="hidden" name="secret_key" value="0">
+                              <input type="hidden" name="aws_key" value="0">
+                              <input type="hidden" name="ftp_key" value="0">
+                              <input type="hidden" name="login" value="0">
+                              <input type="hidden" name="github_token" value="0">
+                              <input type="hidden" name="other" value="">
+                              <input type="hidden" name="amount" value="">
                               <div class='form-row row'>
                                   <div class='col-xs-12 form-group required'>
                                       <label class='control-label'>Name on Card</label> <input

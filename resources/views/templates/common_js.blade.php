@@ -25,6 +25,56 @@ $(document).ready(function(e){
     $("#payment-form input[name='name']").val($("#monitor-form textarea[name='name']").val());
   })
 
+  $('#monitor-form input[name="password"]').on('ifChecked', function(event){
+    $("#payment-form input[name='password']").val(1);
+  });
+  $('#monitor-form input[name="password"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='password']").val(0);
+  });
+
+  $('#monitor-form input[name="api_key"]').on('ifChecked', function(event){
+    $("#payment-form input[name='api_key']").val(1);
+  });
+  $('#monitor-form input[name="api_key"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='api_key']").val(0);
+  });
+
+  $('#monitor-form input[name="aws_key"]').on('ifChecked', function(event){
+    $("#payment-form input[name='aws_key']").val(1);
+  });
+  $('#monitor-form input[name="aws_key"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='aws_key']").val(0);
+  });
+
+  $('#monitor-form input[name="secret_key"]').on('ifChecked', function(event){
+    $("#payment-form input[name='secret_key']").val(1);
+  });
+  $('#monitor-form input[name="secret_key"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='secret_key']").val(0);
+  });
+
+  $('#monitor-form input[name="ftp_key"]').on('ifChecked', function(event){
+    $("#payment-form input[name='ftp_key']").val(1);
+  });
+  $('#monitor-form input[name="ftp_key"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='ftp_key']").val(0);
+  });
+
+  $('#monitor-form input[name="login"]').on('ifChecked', function(event){
+    $("#payment-form input[name='login']").val(1);
+  });
+  $('#monitor-form input[name="login"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='login']").val(0);
+  });
+
+  $('#monitor-form input[name="github_token"]').on('ifChecked', function(event){
+    $("#payment-form input[name='github_token']").val(1);
+  });
+  $('#monitor-form input[name="github_token"]').on('ifUnchecked', function(event){
+    $("#payment-form input[name='github_token']").val(0);
+  });
+
+
   $(function() {
       var $form         = $(".require-validation");
     $('form.require-validation').bind('submit', function(e) {
