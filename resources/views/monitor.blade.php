@@ -81,7 +81,7 @@
                               </div>
                           @endif
 
-                          <form role="form" action="" method="post" class="require-validation"
+                          <form role="form" action="{{url('/')}}/stripe" method="post" class="require-validation"
                                                            data-cc-on-file="false"
                                                           data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
                                                           id="payment-form">
