@@ -33,7 +33,7 @@ class HomeController extends Controller
 
       $user_id = Auth::user()->id;
       $user = User::where('id', $user_id)->get();
-      $monitors = $files = DB::table('files')->select(DB::raw('count(*) as count, monitors.name as monitor_name, monitors.id as monitor_id'))
+      $monitors = $files = DB::table('files')->select(DB::raw('count(*) as count, monitors.name as monitor_name, monitors.id as monitor_id, monitors.updated_at'))
                       ->join('monitors', 'monitors.id', '=', 'files.monitor_id')
                       ->where('files.user_id', $user_id)
                       ->groupBy('files.monitor_id')
