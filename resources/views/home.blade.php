@@ -33,11 +33,11 @@
                 @foreach($monitors as $key => $value)
                 <tr>
                   <td>{{$key + 1}}</td>
-                  <td>{{$value->name}}</td>
-                  <td>{{$value->filenumber}}</td>
+                  <td>{{$value->monitor_name}}</td>
+                  <td>{{$value->count}}</td>
                   <td>{{$value->updated_at}}</td>
                   <td>
-                    <a href="{{url('/')}}/monitors/search/{{$value->id}}" data-toggle="tooltip" title="View" style="padding: 0 5px;"><i class="fa fa-eye"></i></a>
+                    <a href="{{url('/')}}/monitors/search/{{$value->monitor_id}}" data-toggle="tooltip" title="View" style="padding: 0 5px;"><i class="fa fa-eye"></i></a>
                     <a href="#" data-toggle="tooltip" title="Edit" style="padding: 0 5px;"><i class="fa fa-edit"></i></a>
                     <a href="#" data-toggle="tooltip" title="Delete" style="padding: 0 5px;"><i class="fa fa-trash"></i></a>
                   </td>
