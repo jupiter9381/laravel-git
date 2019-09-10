@@ -21,6 +21,7 @@ class FilesTable extends Migration
             $table->string('url')->nullable();
             $table->string('filename')->nullable();
             $table->string('repository')->nullable();
+            $table->string('isDownloaded')->nullable();
             $table->string('isChecked')->default(0);
             $table->string('emailSent')->default(0)
             $table->timestamps();
