@@ -15,6 +15,13 @@
     <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Profile Details</h3>
+          @if(\Session::has('error'))
+          <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+              {{\Session::get('error')}}
+            </div>
+            @endif
         </div>
         <form method="post" action="{{url('/')}}/profile/update">
           @csrf
