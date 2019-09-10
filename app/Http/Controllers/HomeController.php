@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('hasToken')->except('profile');
+        $this->middleware('hasToken')->except(['profile','updateProfile']);
     }
 
     /**
@@ -82,6 +82,7 @@ class HomeController extends Controller
     }
 
     public function updateProfile(Request $request){
+      var_dump("sdfsdf");
       $id = Auth::user()->id;
       $user = User::find($id);
       $user->github_token = $request->input('github_token');
