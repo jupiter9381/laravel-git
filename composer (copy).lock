@@ -1,0 +1,101 @@
+var CONST = {
+
+    "UPWORK_API_HOST": "https://www.upwork.com/api/",
+    "UPWORK_REQUEST_TOKEN_KEY": "upwork_request_token",
+    "UPWORK_REQUEST_TOKEN_SECRET_KEY": "upwork_request_token_secret",
+    "UPWORK_ACCESS_TOKEN_KEY": "upwork_access_token",
+    "UPWORK_ACCESS_TOKEN_SECRET_KEY": "upwork_access_token_secret",
+
+    "TRELLO_API_KEY": "f8264317e895ec6f7449c6b786d7033a",
+    "TRELLO_LOCAL_STORAGE_KEY": "trello_token",
+    "TRELLO_AVATAR_URL": "https://trello-avatars.s3.amazonaws.com/",
+    "TRELLO_AVATAR_SIZE": "/170.png",
+
+    "PROSPERWORKS_SOURCE_NAME": "UpWork",
+    "PROSPERWORKS_CUSTOM_FIELDS": {
+        "PROSPECT": "Prospect",
+        "BID": "Bid",
+        "QUESTIONS": "Questions"
+    },
+    "PROSPERWORKS_USERS": [
+        { "NAME": "Slawko Shnitser", "EMAIL": "slawko.shnitser@gmail.com", "API_KEY": "9ff4c7864c1496a90a9b18a98bc5d911" },
+        { "NAME": "Slavik", "EMAIL": "slawkobond@gmail.com", "API_KEY": "9ab4cf5a102911218ddde777e882c211" }
+    ],
+
+    "CONTENT_ADD_BUTTON": {
+        "BUTTON_POSSIBLY_CONTAINER_SELECTORS": ["div.txtCenter.jsActionsSection", "div.oMsg.oMsgSuccess"],
+        "BUTTON_CLASSES": ["oBtn", "oBtnPrimary", "oBtnJumbo", "prospectBtn"],
+        "BUTTON_NAME": "Get Project Info",
+        "BUTTON_NAME_EXIST": "Project Already Exist"
+    },
+
+    "POPUP": {
+        "BOARD_ID": "76I7wLoX",
+        "TRELLO_URL": "https://trello.com/b/",
+        "UPWORK_IDS": {
+            "SECTION": "upwork_section",
+            "LOGIN_WRAPPER": "upwork_login_wrapper",
+            "PROFILE_WRAPPER": "upwork_profile_wrapper",
+            "OPEN_PROFILE_BTN": "upwork_open_profile_btn",
+            "SHOW_MESSAGES_BTN": "upwork_show_messages_btn",
+            "DISCONNECT_BTN": "upwork_disconnect_btn",
+            "LOGIN_BTN": "upwork_login_btn",
+            "MESSAGES_WRAPPER": "upwork_messages_wrapper",
+            "MESSAGES_PRELOADER": "upwork_messages_preloader",
+            "MESSAGES_LIST": "upwork_messages_list",
+            "USER_AVATAR": "upwork_user_avatar",
+            "FULL_USER_NAME_CONTAINER": "upwork_full_user_name_container"
+        },
+        "TRELLO_IDS": {
+            "SECTION": "trello_section",
+            "LOGIN_WRAPPER": "trello_login_wrapper",
+            "PROFILE_WRAPPER": "trello_profile_wrapper",
+            "OPEN_BOARD_BTN": "trello_open_board_btn",
+            "DISCONNECT_BTN": "trello_disconnect_btn",
+            "LOGIN_BTN": "trello_login_btn",
+            "USER_AVATAR": "trello_user_avatar",
+            "FULL_USER_NAME_CONTAINER": "trello_full_user_name_container",
+            "USERNAME_CONTAINER": "trello_username_container"
+        },
+        "PROSPERWORKS_IDS": {
+            "SECTION": "prosperworks_section",
+            "LOGIN_WRAPPER": "prosperworks_login_wrapper",
+            "PROFILE_WRAPPER": "prosperworks_profile_wrapper",
+            "USER_SELECT_BTN": "prospectworks_user_select_btn",
+            "USER_SELECT_OPTIONS_WRAPPER": "prospectworks_user_select_options_wrapper",
+            "DROPDOWN_MENU": "prospectworks_dropdown_menu",
+            "USER_AVATAR": "prosperworks_user_avatar",
+            "FULL_USER_NAME_CONTAINER": "prosperworks_full_user_name_container",
+            "EMAIL_CONTAINER": "prosperworks_email_container",
+            "CHANGE_USER_BTN": "prosperworks_change_user_btn"
+        }
+    },
+
+    "JOB_TYPES": {
+        "FIXED": "Fixed",
+        "FIXED_PRICE": "fixed-price",
+        "HOURLY": "Hourly"
+    }
+};
+
+var MESSAGES = {
+    "UPWORK_START_LOGIN": "pwrk-strt-login",
+    "UPWORK_ON_VERIFY": "pwrk-n-vrf",
+    "UPWORK_ALREADY_VERIFIED": "pwrk-lrd-vrfd",
+    "UPWORK_GET_AND_SAVE_PROJECT_INFO": "pwrk-gt-nd-sv-prjct-nf",
+    "UPWORK_GET_MESSAGES": "pwrk-gt-mssgs",
+    "UPWORK_ON_MESSAGES_RECEIVED": "pwrk-n-mssgs-rcvd",
+    "UPWORK_DO_LOGOUT": "pwrk-do-logout",
+    "UPWORK_USER_LOGGED_OUT": "pwrk-sr-lggd-t",
+
+    "TRELLO_START_LOGIN": "trl-strt-login",
+    "TRELLO_AUTH_SUCCESS": "trl-auth-sccss",
+    "TRELLO_AUTH_FAILURE": "trl-auth-failr",
+    "TRELLO_DO_LOGOUT": "trl-do-logout",
+
+    "PROSPERWORKS_ON_USER_CHANGED": "prsprwrks_n_sr_chngd",
+    "PROSPERWORKS_CLEAR_USER": "prsprwrks_clr_sr",
+    "PROSPERWORKS_CHECK_IS_OPPORTUNITY_EXIST": "prsprwrks_chck_s_pprtnt_xst",
+    "PROSPERWORKS_ON_CHECK_OPPORTUNITY_EXISTING": "prsprwrks_n_chck_pprtnt_xstng",
+    "PROSPERWORKS_ON_OPPORTUNITY_CREATED": "prsprwrks_n_pprtnt_crtd"
+};
