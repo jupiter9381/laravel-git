@@ -49,9 +49,10 @@
 
     <script>
       $(document).ready(function(){
-        $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
-         .done(function(response){
-        });
+        // $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
+        //  .done(function(response){
+        //    console.log(response);
+        // });
         setInterval(function(){
           $.post('/monitors/notification', {_token: "{{ csrf_token() }}"}, null, 'json')
           .done(function(response){
@@ -81,12 +82,12 @@
          $.post('/monitors/check', {_token: "{{ csrf_token() }}"}, null, 'json')
           .done(function(response){
          });
-       }, 60000 * 2)
+       }, 60000 * 3)
        setInterval(function(){
          $.post('/monitors/emailCheck', {_token: "{{ csrf_token() }}"}, null, 'json')
          .done(function(response){
          });
-       }, 60000 * 0.3)
+       }, 60000)
       });
     </script>
 </body>

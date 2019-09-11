@@ -32,49 +32,9 @@ class MonitorController extends Controller
     }
 
     public function search($id) {
-
       $user_id = Auth::user()->id;
       $monitor = Monitor::find($id);
       $searches = DB::table('files')->where('user_id', $user_id)->where('monitor_id', $id)->get();
-
-      // $token = Auth::user()->github_token;
-      //
-      // $headers = [
-      //   'Authorization' => 'token '.$token,
-      //   'Accept' => 'application/json',
-      //   'Content-Type' => 'application/json',
-      // ];
-      // $client = new \GuzzleHttp\Client([
-      //   'headers' => $headers
-      // ]);
-      //
-      // $res = $client->get('https://api.github.com/user');
-      // $res = json_decode($res->getBody());
-      // $github_login = $res->login;
-      //
-      // $headers = [
-      //   'Accept' => 'application/json',
-      //   'Content-Type' => 'application/json'
-      // ];
-      // $client = new \GuzzleHttp\Client([
-      //   'headers' => $headers
-      // ]);
-      // $monitor = Monitor::where('id', $id)->first();
-      //
-      // $res = $client->get('https://api.github.com/search/code?q=pre_browser_img+in:file+user:jupiter9381');
-      //
-      // $res = json_decode($res->getBody());
-      // $items = $res->items;
-      //
-      // $searches = array();
-      // foreach ($items as $key => $item) {
-      //   $data = array(
-      //     "filename" => $item->name,
-      //     "html_url" => $item->html_url,
-      //     "repository" => $item->repository->name,
-      //   );
-      //   array_push($searches, $data);
-      // }
 
       return view('monitor_search', compact('searches', 'monitor'));
     }
@@ -196,48 +156,40 @@ class MonitorController extends Controller
     }
     public function checkMonitors(Request $request) {
       $user_id = Auth::user()->id;
-      $monitors = Monitor::where('user_id', $user_id)->get();
-
       $token = Auth::user()->github_token;
 
-      $headers = [
-        'Authorization' => 'token '.$token,
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-      ];
-      $client = new \GuzzleHttp\Client([
-        'headers' => $headers
-      ]);
+      $client = new \GuzzleHttp\Client();
 
-      $res = $client->get('https://api.github.com/user');
-      $res = json_decode($res->getBody());
-      $github_login = $res->login;
-
+      $monitors = Monitor::where('user_id', $user_id)->get();
       foreach ($monitors as $key => $value) {
-        $search_keyword = "";
-        $search_keyword .= $value->name."+";
-        if($value->password == "1") $search_keyword .= "password+";
-        if($value->api_key == "1") $search_keyword .= "api_key+";
-        if($value->secret_key == "1") $search_keyword .= "secret_key+";
-        if($value->aws_key == "1") $search_keyword .= "aws_key+";
-        if($value->ftp_key == "1") $search_keyword .= "ftp_key+";
-        if($value->login == "1") $search_keyword .= "login+";
-        if($value->github_token == "1") $search_keyword .= "github_token+";
+        $monitor_id = $value->id;
+        $code=$value->name."+";
+        $search = $code.'api_key';
 
-        $search_keyword = substr($search_keyword, 0, -1);
+        if($value->password == "1") $search = $code.'password';
+        if($value->api_key == "1") $search = $code.'api_key';
+        if($value->secret_key == "1") $search = $code.'secret_key';
+        if($value->aws_key == "1") $search = $code.'aws_key';
+        if($value->ftp_key == "1") $search = $code ."ftp_key";
+        if($value->login == "1") $search = $code ."login";
+        if($value->github_token == "1") $search = $code ."github_token+";
 
-        $res = $client->get('https://api.github.com/search/code?q='.$search_keyword.'+in:file+user:'.$github_login);
+        $client = new \GuzzleHttp\Client();
+        $res = $client->request('GET', 'https://api.github.com/search/code?q=' .urlencode($search),
+                    [
+                        'headers' => [
+                            'Authorization' => 'token '.$token,
+                            'Accept' => 'application/vnd.github.v3.text-match+json'
+                        ],
+                    ]
+                );
+        $search_result = json_decode($res->getBody()->getContents(), true);
+        $items = $search_result['items'];
 
-        $res = json_decode($res->getBody());
-        $items = $res->items;
-
-        $searches = array();
         foreach ($items as $key => $item) {
-          $filename = $item->name;
-          $html_url = $item->html_url;
-          $repository = $item->repository->name;
-
-          $monitor_id = $value->id;
+          $filename = $item['name'];
+          $html_url = $item['html_url'];
+          $repository = $item['repository']['name'];
 
           $file = DB::table('files')->where('user_id', $user_id)->where('monitor_id', $monitor_id)->where('url', $html_url)->get();
           if(count($file) == 0){
@@ -252,6 +204,9 @@ class MonitorController extends Controller
             $file->save();
           }
         }
+        return response()->json([
+          'result' => $items
+        ]);
       }
     }
 
