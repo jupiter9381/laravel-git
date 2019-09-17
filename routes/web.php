@@ -19,13 +19,13 @@ Route::get('/', function () {
     // return view('fileupload');
 });
 
-Route::post('upload', function(){
-  //Storage::disk('s3')->put('file.txt', $fileContent);
-  request()->file('file')->store(
-    '',
-    's3'
-  );
-})->name('upload');
+// Route::post('upload', function(){
+//   //Storage::disk('s3')->put('file.txt', $fileContent);
+//   request()->file('file')->store(
+//     '',
+//     's3'
+//   );
+// })->name('upload');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
