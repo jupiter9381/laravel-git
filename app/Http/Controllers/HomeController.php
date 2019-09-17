@@ -82,7 +82,6 @@ class HomeController extends Controller
     }
 
     public function updateProfile(Request $request){
-      var_dump("sdfsdf");
       $id = Auth::user()->id;
       $user = User::find($id);
       $user->github_token = $request->input('github_token');

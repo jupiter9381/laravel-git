@@ -46,7 +46,6 @@ class LoginController extends Controller
     public function login(Request $request){
       $email = $request->input("email");
       $password = $request->input('password');
-      //$authUser = $this->findUser($email, $password);
       $user = User::where('email', $email)->whereNotNull('password')->first();
 
       if (Hash::check($password, $user->password)) {
@@ -90,6 +89,6 @@ class LoginController extends Controller
       ]);
     }
 
-    
+
 
 }
